@@ -1,0 +1,165 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header><h2>{{entityInfo.title}}</h2></nb-card-header>
+      <nb-card-body>
+        <div>
+          <div class="col-md-12">
+            <button *ngIf="isList" class="btn {{ settings[1].class }}" (click)="settings[1].fun()">
+              {{settings[1].buttonTitle}}
+            </button>
+            <button *ngIf="isList" class="btn {{ settings[2].class }}" (click)="settings[2].fun()">
+              {{settings[2].buttonTitle}}
+            </button>
+            <button *ngIf="isNew" class="btn {{ settings[3].class }}" (click)="settings[3].fun()">
+              {{settings[3].buttonTitle}}
+            </button>
+            <button class="btn btn-secondary" (click)="settings[4].fun()" style="float: right;">
+              <i class="far fa-file-pdf"
+                 style="background-color: Transparent; border:none; font-size:1.3em;color:#ff2045;left:10px"></i>
+            </button>
+
+            <div class="row" *ngIf="isList">
+              <div class="example-container col-sm-6 col-md-4 col-xl-3 col-xxxl-2" *ngFor="let filter of entityFilters">
+                <h5>{{filter.label}}</h5>
+                <select class="form-control" (click)="onSelectFilterOption(filter.name)"
+                        id="filterOption_{{filter.name}}">
+                  <option class="form-control-sm" *ngFor="let val of filter.values" value="{{val.name}}">{{val.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<toaster-container [toasterconfig]="config"></toaster-container>
+
+
+<div id="ifEditOrNew">
+  <form>
+    <div *ngFor="let row of editorRows" class="row">
+      <div *ngFor="let col of row.children" class="{{row.cols}}">
+        <nb-card *ngFor="let panel of col.children" class="inline-form-card">
+          <nb-card-header>{{panel.title}}</nb-card-header>
+          <nb-card-body>
+            <div *ngFor="let f of panel.children; let i=index">
+
+              <div *ngIf="f.control == 0; else elseBlock0" class="form-group row">
+
+                <label class="col-sm-3 col-form-label" for="i1"> {{f.title}}</label>
+                <div class="col-sm-9">
+                  <input type="text" placeholder="" class="form-control" id="i1" [disabled]="!f.enabled"
+                         value={{f.value}}/>
+
+                </div>
+
+              </div>
+              <ng-template #elseBlock0>
+                <div *ngIf="f.control == 7; else elseBlock1" class="form-group row">
+
+                  <label class="col-sm-3 col-form-label" for="i7"> {{f.title}}</label>
+                  <div class="col-sm-9">
+                    <input type="date" placeholder="" class="form-control" id="i7" [disabled]="!f.enabled"/>
+
+                  </div>
+
+                </div>
+                <ng-template #elseBlock1>
+                  <div *ngIf="f.control == 1; else elseBlock2" class="form-group row">
+
+                    <label class="col-sm-3 col-form-label">{{f.title}}</label>
+                    <div class="col-sm-9 ">
+                          <textarea rows="5" placeholder="Text Area" class="form-control"
+                                    [disabled]="!f.enabled"></textarea>
+                    </div>
+
+                  </div>
+
+                  <ng-template #elseBlock2>
+                    <div *ngIf="f.control == 2; else elseBlock3" class="form-group row">
+                      <label class="col-sm-3 col-form-label">{{f.title}}</label>
+                      <div class="col-sm-9">
+                        <input [disabled]="!f.enabled" type="text" placeholder="" class="form-control"/>
+                      </div>
+
+                    </div>
+
+                    <ng-template #elseBlock3>
+                      <div *ngIf="f.control == 3; else elseBlock4" class="form-group row">
+                        <div class="offset-sm-3 col-sm-9">
+                          <nb-checkbox status="success" [disabled]="!f.enabled">{{f.title}}</nb-checkbox>
+                        </div>
+
+                      </div>
+
+                      <ng-template #elseBlock4>
+                        <div *ngIf="f.control == 4" class="form-group row">
+                          <label class="col-sm-3 col-form-label" style="right: 5px;">{{f.title}}
+                          </label>
+                          <div class="form-group col-sm-6 row">
+                            <div class="form-group col-sm-9">
+                              <select class="form-control" id="form-control-{{f.name}}">
+
+                                <option *ngFor="let val of f.vals; let i=index" id="val.id">{{val.name}}</option>
+                                <option *ngIf="f.nullable"></option>
+
+                              </select>
+                            </div>
+                            <!--<button class="btn"><i class="fa fa-home"></i></button>-->
+
+                            <i *ngFor="let target of targetEntityName">
+                              <button *ngIf="f.name == target.name" class="btn btn-hero-secondary"
+                                      value="{{pageUrl}}{{target.target}}"
+                                      onClick="window.location.replace(this.value)"><i class="fa fa-link"></i></button>
+                            </i>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </ng-template>
+                  </ng-template>
+                </ng-template>
+              </ng-template>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<nb-card *ngIf="isList && newForeignElementIsHere">
+  <nb-card-body>
+    <ng2-smart-table [settings]="tableHead" [source]="dataBodyTable" (deleteConfirm)="onDeleteConfirm($event)"
+                     (userRowSelect)="onEdit($event)" (rowSelect)="onRowSelect($event)">
+    </ng2-smart-table>
+    <h6 class="center_total"><b>Total: {{dataBodyTable.length}}</b>
+    </h6>
+    <!--<button *ngIf="isList" class="btn {{ settings[4].class }}" (click)="settings[4].fun()"-->
+            <!--style="float: right;">-->
+      <!--<i class="far fa-file-pdf" style="font-size: 1.8em; left: 10px"></i>-->
+    <!--</button>-->
+
+
+  </nb-card-body>
+</nb-card>
+
+
+<div class="row" *ngIf="isNew">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-body>
+        <button *ngIf="isNew" class="btn {{ settings[0].class }}" (click)="settings[0].fun()">{{ settings[0].buttonTitle
+          }}
+        </button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
