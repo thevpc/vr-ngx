@@ -3,7 +3,7 @@ import {NbThemeService} from "@nebular/theme";
 import { LocalDataSource } from 'ng2-smart-table';
 import { SmartTableService } from '../../../../@core/mock/smart-table.service';
 import { VrService } from '../../service/vr.service';
-import { VrEduService } from '../../../edu/services/vr.edu';
+import { VrEduService } from '../../../edu/services/vr.edu.service';
 
 
 export class ProfileCv {

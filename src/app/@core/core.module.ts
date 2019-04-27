@@ -56,7 +56,7 @@ import {VrAuthProvider} from '../@vr/core/service/vr.auth-provider';
 import {VrService} from '../@vr/core/service/vr.service';
 import {VrSharedState} from '../@vr/core/service/vr.shared-state';
 import {VrHttp} from '../@vr/core/service/vr.http';
-import { VrEduService } from '../@vr/edu/services/vr.edu';
+import { VrEduService } from '../@vr/edu/services/vr.edu.service';
 import { VrWpmService } from '../@vr/wpm/services/vr.wpm.service';
 
 const socialLinks = [
