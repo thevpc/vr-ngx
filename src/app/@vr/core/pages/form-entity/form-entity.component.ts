@@ -9,8 +9,8 @@ import {log} from 'util';
 import {BodyOutputType, Toast, ToasterConfig, ToasterService} from 'angular2-toaster';
 
 import 'style-loader!angular2-toaster/toaster.css';
-import { VrService } from '../../service/vr.service';
-import { VrSharedState } from '../../service/vr.shared-state';
+import { VrService } from '../../services/vr.service';
+import { VrSharedState } from '../../services/vr.shared-state';
 import { VrWpmService } from '../../../wpm/services/vr.wpm.service';
 
 declare let jsPDF: any;

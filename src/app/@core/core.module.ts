@@ -52,28 +52,24 @@ import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
 
-import {VrAuthProvider} from '../@vr/core/service/vr.auth-provider';
-import {VrService} from '../@vr/core/service/vr.service';
-import {VrSharedState} from '../@vr/core/service/vr.shared-state';
-import {VrHttp} from '../@vr/core/service/vr.http';
-import { VrEduService } from '../@vr/edu/services/vr.edu.service';
-import { VrWpmService } from '../@vr/wpm/services/vr.wpm.service';
+import { VrAuthProvider } from '../@vr/core/services/vr.auth-provider';
+import { VR_CORE_PROVIDERS } from '../@vr/core/vr.core';
 
 const socialLinks = [
   {
     url: 'https://github.com/akveo/nebular',
     target: '_blank',
-    icon: 'socicon-github',
+    icon: 'github',
   },
   {
     url: 'https://www.facebook.com/akveo/',
     target: '_blank',
-    icon: 'socicon-facebook',
+    icon: 'facebook',
   },
   {
     url: 'https://twitter.com/akveo_inc',
     target: '_blank',
-    icon: 'socicon-twitter',
+    icon: 'twitter',
   },
 ];
 
@@ -171,12 +167,7 @@ export class CoreModule {
       providers: [
         ...NB_CORE_PROVIDERS,
         // @author vpc, added providers
-        VrHttp,
-        VrAuthProvider,
-        VrSharedState,
-        VrService,
-        VrEduService,
-        VrWpmService,
+        ...VR_CORE_PROVIDERS,
       ],
     };
   }

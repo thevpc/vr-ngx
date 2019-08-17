@@ -1,4 +1,14 @@
 import { NgModule } from '@angular/core';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbProgressBarModule,
+  NbTabsetModule,
+  NbUserModule,
+  NbIconModule,
+  NbSelectModule,
+  NbListModule,
+} from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -46,13 +56,18 @@ import { EarningPieChartComponent } from './earning-card/back-side/earning-pie-c
 import { EarningCardFrontComponent } from './earning-card/front-side/earning-card-front.component';
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
 
-// [Vr]
-//import { VrArticlesListComponent } from '../../@vr/core/components/vr-articles/vr-articles-list.component';
-
 @NgModule({
   imports: [
     ThemeModule,
+    NbCardModule,
+    NbUserModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTabsetModule,
+    NbSelectModule,
+    NbListModule,
     ChartModule,
+    NbProgressBarModule,
     NgxEchartsModule,
     NgxChartsModule,
     LeafletModule,
@@ -63,8 +78,6 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
     StatsAreaChartComponent,
     StatsBarAnimationChartComponent,
     ProfitCardComponent,
-    //[Vr]
-    //VrArticlesListComponent,
     ECommerceChartsPanelComponent,
     ChartPanelHeaderComponent,
     ChartPanelSummaryComponent,

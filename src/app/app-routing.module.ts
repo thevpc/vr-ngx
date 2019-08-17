@@ -8,12 +8,22 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { VrPublicComponent } from './@vr/core/components/vr-public/vr-public.component';
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
+  {
+    path: 'pages',
+    loadChildren: () => import('app/pages/pages.module')
+      .then(m => m.PagesModule),
+  },
+  {
+    path: 'public',
+    component: VrPublicComponent,
+  },
   {
     path: 'auth',
     component: NbAuthComponent,
+    //component: VrPublicComponent,
     children: [
       {
         path: '',
@@ -46,7 +56,7 @@ const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: true,
+  useHash: false,
 };
 
 @NgModule({

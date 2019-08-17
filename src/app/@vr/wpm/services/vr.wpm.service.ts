@@ -4,8 +4,8 @@ import {Injectable} from '@angular/core';
 import {log} from 'util';
 import {Subject} from 'rxjs';
 import {delay, share} from 'rxjs/operators';
-import { VrSharedState } from '../../core/service/vr.shared-state';
-import { VrHttp } from '../../core/service/vr.http';
+import { VrSharedState } from '../../core/services/vr.shared-state';
+import { VrHttp } from '../../core/services/vr.http';
 
 
 /**

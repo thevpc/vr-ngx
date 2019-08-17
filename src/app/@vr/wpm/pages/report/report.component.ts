@@ -4,8 +4,8 @@ import {NbThemeService} from '@nebular/theme';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {log} from 'util';
-import { VrSharedState } from '../../../core/service/vr.shared-state';
-import { VrService } from '../../../core/service/vr.service';
+import { VrSharedState } from '../../../core/services/vr.shared-state';
+import { VrService } from '../../../core/services/vr.service';
 import { VrWpmService } from '../../services/vr.wpm.service';
 
 declare let jsPDF;

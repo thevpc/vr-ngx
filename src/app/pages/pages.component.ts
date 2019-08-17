@@ -1,31 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
-import { VrService } from '../@vr/core/service/vr.service';
-import { VrSharedState } from '../@vr/core/service/vr.shared-state';
+import { VrMenu } from '../@vr/core/services/vr.menu';
 
 @Component({
   selector: 'ngx-pages',
   styleUrls: ['pages.component.scss'],
   template: `
-    <ngx-sample-layout>
+    <ngx-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
-    </ngx-sample-layout>
+    </ngx-one-column-layout>
   `,
 })
-export class PagesComponent implements OnInit{
+  // [Vr]
+  export class PagesComponent implements OnInit{
 
   menu = MENU_ITEMS;
 
-  constructor(private vrService: VrService, private vrModemState: VrSharedState) {
+  // [Vr]
+  constructor(private menuService: VrMenu) {
   }
 
+  // [Vr]
   ngOnInit(): void {
-    this.vrModemState.domainModel.subscribe(
-      newDomain => this.menu = this.vrService.ui_rebuildMenu(newDomain)
-      ,
-      err => alert(err)
-    );
+    this.menuService.menuModel.subscribe(x=> this.menu=x);
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 //import { SmartTableService } from '../../@core/data/smart-table.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { VrPublicComponent } from './components/vr-public/vr-public.component';
 //import { RouterModule, Routes } from '@angular/router';
 //import { FormEntityComponent } from './pages/form-entity/form-entity.component';
 //import { ReportComponent } from '../wpm/pages/report/report.component';
@@ -31,7 +32,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
   ],
   declarations: [
     //ProfileComponent
-  ],
+VrPublicComponent],
   providers: [
 //    SmartTableService
   ]

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { FormsComponent } from './forms.component';
 import { FormInputsComponent } from './form-inputs/form-inputs.component';
@@ -37,10 +37,11 @@ const routes: Routes = [{
     {
       path: 'report',
       component: ReportComponent,
-    }, {
+    }
+    , {
       path: 'entity/:name',
       component: FormEntityComponent,
-    },
+    }
   ],
 }];
 
@@ -53,15 +54,5 @@ const routes: Routes = [{
   ],
 })
 export class FormsRoutingModule {
-
 }
 
-export const routedComponents = [
-  FormsComponent,
-  FormInputsComponent,
-  FormLayoutsComponent,
-  DatepickerComponent,
-  //[Vr]
-  FormEntityComponent,
-  ReportComponent,
-];

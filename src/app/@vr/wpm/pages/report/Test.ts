@@ -5,8 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {log} from 'util';
 import {element} from "protractor";
-import { VrSharedState } from '../../../core/service/vr.shared-state';
-import { VrService } from '../../../core/service/vr.service';
+import { VrSharedState } from '../../../core/services/vr.shared-state';
+import { VrService } from '../../../core/services/vr.service';
 
 declare let jsPDF;
 

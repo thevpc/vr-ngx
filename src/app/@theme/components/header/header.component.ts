@@ -1,39 +1,94 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserData } from '../../../@core/data/users';
-import { AnalyticsService } from '../../../@core/utils';
 import { LayoutService } from '../../../@core/utils';
-import { VrSharedState, CurrentUser } from '../../../@vr/core/service/vr.shared-state';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { CurrentUser, VrSharedState } from '../../../@vr/core/services/vr.shared-state';
+
 
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  @Input() position = 'normal';
-
+  private destroy$: Subject<void> = new Subject<void>();
+  userPictureOnly: boolean = false;
+  // [Vr]
+  // user: any;
   user : CurrentUser = {name:'anonymous',picture:'',obj:null,connected:false} ;
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  themes = [
+    {
+      value: 'default',
+      name: 'Light',
+    },
+    {
+      value: 'dark',
+      name: 'Dark',
+    },
+    {
+      value: 'cosmic',
+      name: 'Cosmic',
+    },
+    {
+      value: 'corporate',
+      name: 'Corporate',
+    },
+  ];
+
+  currentTheme = 'default';
+
+  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
+	      private themeService: NbThemeService,
               private userService: UserData,
-              private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
+              private breakpointService: NbMediaBreakpointsService,
               // [Vr]
               private vrSharedState : VrSharedState) {
   }
 
   ngOnInit() {
+    this.currentTheme = this.themeService.currentTheme;
+
+    this.userService.getUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((users: any) => this.user = users.nick);
+
+    const { xl } = this.breakpointService.getBreakpointsMap();
+    this.themeService.onMediaQueryChange()
+      .pipe(
+        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+
+    this.themeService.onThemeChange()
+      .pipe(
+        map(({ name }) => name),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(themeName => this.currentTheme = themeName);
     this.vrSharedState.currentUser.subscribe(x=>{
       this.user=x;
     })
     //this.userService.getUsers()
     //  .subscribe((users: any) => this.user = users.nick);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  changeTheme(themeName: string) {
+    this.themeService.changeTheme(themeName);
   }
 
   toggleSidebar(): boolean {
@@ -43,11 +98,8 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
-  goToHome() {
+  navigateHome() {
     this.menuService.navigateHome();
-  }
-
-  startSearch() {
-    this.analyticsService.trackEvent('startSearch');
+    return false;
   }
 }
